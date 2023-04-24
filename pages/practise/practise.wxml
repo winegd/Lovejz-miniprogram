@@ -1,0 +1,24 @@
+<!--pages/practise/practise.wxml-->
+<view style="width: 100%;">
+
+  <scroll-view show-scrollbar="false" lower-threshold='20' scroll-into-view="{{toView}}" scroll-with-animation="true"
+    class="scroll-view_h" bindscroll="scroll" scroll-x="true" paging-enabled="true" enhanced="true">
+    <view class="scroll-view-item_h" id="item{{index}}" wx:for="{{list}}" wx:for-index="index" wx:for-item="item"
+      wx:key="index">
+      <view wx:if="{{item == 123}}">
+        <tijiao bind:submit_jiexi="submit_jiexi" bind:submit_answer="submit" bind:Toquestion="Toquestion" mode="{{m}}"
+          s_list="{{list}}"></tijiao>
+      </view>
+      <view wx:else>
+        <question data-index="{{index}}" id="component{{index}}" class="question_component"
+          bind:updateQuestion="updateQuestion" bind:nextQuestion="nextQuestion" index="{{index}}" mode="{{m}}"
+          question="{{item}}">
+        </question>
+
+      </view>
+
+    </view>
+
+
+  </scroll-view>
+</view>

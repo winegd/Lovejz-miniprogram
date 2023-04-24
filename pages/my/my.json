@@ -1,0 +1,9 @@
+{
+  "usingComponents": {
+    "l-button": "lin-ui/button/index",
+    "l-arc-popup": "lin-ui/arc-popup/index",
+    "l-message": "lin-ui/message/index",
+    "l-input": "lin-ui/input/index",
+    "l-avatar": "lin-ui/avatar/index"
+  }
+}

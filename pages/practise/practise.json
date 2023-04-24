@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "question": "/components/question/question",
+    "tijiao": "/components/tijiao/tijiao"
+  }
+}

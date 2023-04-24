@@ -1,0 +1,29 @@
+/* pages/login/login.wxss */
+Page {
+  background: -webkit-linear-gradient(#1296db 0%, rgb(240, 239, 244) 30%);
+
+}
+
+.login-container {
+  /* margin-top: 400rpx; */
+  width: 70%;
+  margin: 250rpx auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* align-items: center; */
+}
+
+.container {
+  /* display: flex; */
+  /* justify-content: center;   */
+  /* align-items: center; */
+  /* margin-top: 100rpx; */
+}
+
+.split_button {
+  margin: 50rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}

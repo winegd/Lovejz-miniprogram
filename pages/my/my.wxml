@@ -1,0 +1,94 @@
+<!-- pages/my/my.wxml -->
+<view>
+  <view class="bak">
+    <view style="height: 20rpx;"></view>
+    <view class="top-background">
+      <view wx:if="{{userInfo.nickname == '' || userInfo.nickname== null  || userInfo.nickname=='微信用户'}}"
+        class="touxiang" bindtap="show_popup">
+        <!-- <view>
+
+
+          <l-avatar class="my_avatar" size="120" icon="user" />
+          <view>
+            <text class="font_style">微信用户</text>
+          </view>
+
+        </view> -->
+        <view class="content-r">
+          <l-avatar size="140" src="{{defaultAvatarUrl}}" />
+          <!-- <image style="height: 150rpx;width: 150rpx;border-radius: 100%;" src="{{defaultAvatarUrl}}"></image> -->
+          <!-- <l-avatar class="my_avatar" size="140"  src="{{userInfo.avatarUrl}}" /> -->
+          <!-- <image class="avatar" src="{{userInfo.avatarUrl}}"></image> -->
+          <view class="content-c">
+            <text class="font_style">微信用户</text>
+            <view class="bjzl">
+              <image style="width: 35rpx;height: 35rpx;" src="/icon/bj.png"></image>
+              <text style="font-size: 30rpx;">编辑资料</text>
+            </view>
+          </view>
+        </view>
+        <view style="width: 220rpx "></view>
+      </view>
+      <view wx:else class="touxiang" bindtap="show_popup">
+        <view class="content-r">
+          <l-avatar class="my_avatar" size="140" src="{{userInfo.avatarurl}}" />
+          <!-- <image class="avatar" src="{{userInfo.avatarUrl}}"></image> -->
+          <view class="content-c">
+            <text class="font_style">{{userInfo.nickname}}</text>
+            <view class="bjzl">
+              <image style="width: 35rpx;height: 35rpx;" src="/icon/bj.png"></image>
+              <text style="font-size: 30rpx;">编辑资料</text>
+            </view>
+          </view>
+        </view>
+        <view style="width: 200rpx "></view>
+      </view>
+    </view>
+
+
+
+
+    <!-- 内容 -->
+    <view class="content">
+      <view wx:for="{{content_list}}" wx:for-index="index" wx:for-item="img" wx:key="key">
+        <navigator target="self" url="{{img.to}}" open-type="navigate">
+          <view class="{{content_list.length-1 == index ? 'content-item_no':'content-item'}}">
+            <view class="content-text">
+              <image class="content-icon" src="{{img.icon}}" />
+              <text>{{img.name}}</text>
+            </view>
+            <view class="content-jt">
+              <text>10</text>
+              <image class="content-right" src="/icon/right.png" />
+            </view>
+          </view>
+        </navigator>
+      </view>
+
+    </view>
+
+    <avatarNicknameModal showAvaModal="{{true}}"></avatarNicknameModal>
+    <l-toast icon="success" title="登陆成功" />
+    <l-message />
+    <l-arc-popup show="{{show_popup}}" locked="true" arc-radius="50">
+
+      <view class="popup-touxiang">
+        <text style="font-size: 40rpx;font-weight: 600;">设置头像和昵称</text>
+        <l-button class="btn1" special="{{true}}" open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar">
+          <image class="up-avatar" mode="aspectFit" src="{{avatarUrl}}"></image>
+        </l-button>
+        <l-input label="昵称" type="nickname" bind:linblur="setNickName" placeholder="请输入昵称" />
+        <view class="bt-touxaing">
+          <l-button style="margin-right: 30rpx;" bindtap="close_popup" plain="{{true}}">
+            取消
+          </l-button>
+          <l-button form-type="submit" style="margin-left: 30rpx;" bindtap="submit_popup" type="default">
+            设置
+          </l-button>
+        </view>
+      </view>
+
+    </l-arc-popup>
+
+  </view>
+</view>

@@ -1,0 +1,86 @@
+<!--components/submit/submit.wxml-->
+
+<view class="content">
+  <view style="margin-top: 20rpx;"></view>
+  <view wx:if="{{m == 0}}">
+    <view style="box-shadow: 0 0 20px #eeeeee; border-radius: 20rpx;">
+
+      <view class="q_content">
+        <view class="q_content-item" wx:for="{{list}}" wx:for-index="index" wx:for-item="item" wx:key="index">
+          <view bindtap="click_qeustion" data-index="{{index}}" class="{{item.isAnswer ==1 ? 'circle':'circle_2'}}">
+            {{index+1}}
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view style="height: 400rpx;"></view>
+    <view wx:if="{{list.length >0}}">
+      <van-button bindtap="submit" class="submit" block round color="rgb(59, 123, 251)">交卷</van-button>
+
+    </view>
+  </view>
+
+  <view wx:if="{{m == 1}}">
+
+    <view class="dati_content">
+      <view class="datika">
+        <view style="display: flex;flex-direction: row;margin-top: 30rpx;">
+          <image style="width: 50rpx;height: 50rpx;" src="/icon/dtk.png"></image>
+          <view style="font-size: 35rpx;font-weight: 700;margin-left: 10rpx;">答题卡</view>
+        </view>
+
+        <view class="q_content2">
+          <view class="q_content-item" wx:for="{{list}}" wx:for-index="index" wx:for-item="item" wx:key="index">
+            <view bindtap="click_qeustion" data-index="{{index}}"
+              class="{{item.isCorrect ==1 ? 'circle_true':'circle_false'}}">
+              {{index+1}}
+            </view>
+          </view>
+        </view>
+      </view>
+
+    </view>
+
+    <view class="datiqk_content">
+      <view class="datika">
+        <view style="display: flex;flex-direction: row;margin-top: 30rpx;">
+          <image style="width: 50rpx;height: 50rpx;" src="/icon/ksqk.png"></image>
+          <view style="font-size: 35rpx;font-weight: 700;margin-left: 10rpx;">答题情况</view>
+        </view>
+
+        <view class="qk_c">
+          <view class="qk">
+            <view style="color: #a2a4b2;font-size: small;">一共</view>
+            <view style="color: #477ce3;">{{all_num}} 题</view>
+          </view>
+          <view class="qk">
+            <view style="color: #a2a4b2;font-size: small;">答对</view>
+            <view style="color: rgb(46, 198, 159);">{{correct_num}} 题</view>
+          </view>
+          <view class="qk">
+            <view style="color: #a2a4b2;font-size: small;">答错</view>
+            <view style="color: rgb(255, 91, 90);">{{all_num-correct_num}} 题</view>
+          </view>
+          <view class="qk">
+            <view style="color: #a2a4b2;font-size: small;">用时</view>
+            <view style="color: rgb(46, 198, 159);">{{all_time}} s</view>
+
+          </view>
+
+        </view>
+
+      </view>
+
+    </view>
+
+    <view style="height: 100rpx;"></view>
+
+
+    <view wx:if="{{list.length >0}}">
+      <van-button bindtap="submit_jiexi" class="submit" block round color="rgb(59, 123, 251)">查看解析</van-button>
+
+    </view>
+  </view>
+
+</view>

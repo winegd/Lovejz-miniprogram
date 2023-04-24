@@ -1,0 +1,26 @@
+/* pages/practise/practise.wxss */
+.scroll-view_h {
+  white-space: nowrap;
+
+}
+
+.scroll-view-item {
+  /* height: 300rpx; */
+  height: 100%;
+}
+
+.scroll-view-item_h {
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+
+}
+
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  color: transparent;
+  display: none;
+}
+
+.question_component {}

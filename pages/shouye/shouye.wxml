@@ -1,0 +1,41 @@
+<!-- pages/shouye/shouye.wxml -->
+<view class="bak">
+  <view style="height: 20rpx;"></view>
+  <view class="top-content">
+    <view class="top-content-text">
+      <text style="font-weight: 600;margin-left: 20rpx;">今日数据</text>
+    </view>
+    <view class="top-content-top">
+      <view class="top-content-list">
+        <view wx:for="{{content_list}}" wx:for-index="index" wx:for-item="data" wx:key="key">
+          <view class="top-content-item">
+            <text style="color:{{data.color}}">{{data.count}}</text>
+            <text style=" font-size: small;">{{data.name}}</text>
+          </view>
+        </view>
+      </view>
+      <view></view>
+    </view>
+  </view>
+  <view class="content">
+    <view class="content-text">
+      <text style="font-weight: 600;margin-left: 20rpx;">题库</text>
+    </view>
+    <view class="content-timu-list">
+
+      <view class="{{index%2 == 0 ? 'content-timu_2':'content-timu'}}" wx:for="{{gongneng}}" wx:for-item="item"
+        wx:for-index="index" wx:key="index">
+        <navigator target="self" url="{{item.to}}" open-type="navigate">
+          <view class="content-gongneng">
+            <text style="margin-left: 40rpx;font-weight: 520;">{{item.name}}</text>
+            <image style="width: 100rpx;height: 100rpx;margin-right: 20rpx;" src="{{item.icon}}" />
+
+          </view>
+        </navigator>
+
+      </view>
+
+
+    </view>
+  </view>
+</view>

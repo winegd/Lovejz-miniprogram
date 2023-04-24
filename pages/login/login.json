@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "l-input": "lin-ui/input/index",
+    "l-button": "lin-ui/button/index",
+    "l-message": "lin-ui/message/index"
+  }
+}

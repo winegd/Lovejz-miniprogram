@@ -1,0 +1,138 @@
+/* components/submit/submit.wxss */
+
+
+
+.content {
+  margin-left: 20rpx;
+  margin-right: 20rpx;
+
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.q_content {
+  /* margin-top: 50rpx; */
+  display: flex;
+  flex-direction: row;
+  flex-flow: wrap;
+  justify-content: flex-start;
+  margin-left: 30rpx;
+  padding-bottom: 20rpx;
+  /* height: 500rpx;  */
+}
+
+.q_content2 {
+  margin-top: 20rpx;
+  display: flex;
+  flex-direction: row;
+  flex-flow: wrap;
+  justify-content: flex-start;
+
+}
+
+.datika {
+
+  display: flex;
+  flex-direction: column;
+  margin-left: 20rpx;
+  margin-top: 30rpx;
+  padding-left: 30rpx;
+
+}
+
+.dati_content {
+
+  box-shadow: 0 0 20px #eeeeee;
+  border-radius: 20rpx;
+  height: 400rpx;
+}
+
+.datiqk_content {
+
+  box-shadow: 0 0 20px #eeeeee;
+  border-radius: 20rpx;
+  height: 350rpx;
+
+}
+
+.q_content-item {
+  margin-top: 20rpx;
+  flex: 0 0 calc((100% - 30rpx) / 5);
+  /* height: 50rpx; */
+  /* margin-bottom: 10rpx; */
+}
+
+.submit {
+  width: calc(100% - 40rpx);
+  position: absolute;
+}
+
+.circle {
+  background-color: rgb(59, 123, 251);
+  border: solid 1rpx rgb(59, 123, 251);
+  width: 70rpx;
+  height: 70rpx;
+  text-align: center;
+  line-height: 70rpx;
+  color: aliceblue;
+  border-radius: 50%;
+  margin-right: 20rpx;
+
+}
+
+.circle_2 {
+  border: solid 1rpx rgb(238, 238, 238);
+  width: 70rpx;
+  height: 70rpx;
+  text-align: center;
+  line-height: 70rpx;
+  color: rgb(215, 213, 213);
+  border-radius: 50%;
+  margin-right: 20rpx;
+}
+
+.circle_true {
+  background-color: rgb(46, 198, 159);
+  border: solid 1rpx rgb(46, 198, 159);
+  width: 70rpx;
+  height: 70rpx;
+  text-align: center;
+  line-height: 70rpx;
+  color: aliceblue;
+  border-radius: 50%;
+  margin-right: 20rpx;
+
+}
+
+.circle_false {
+  background-color: rgb(255, 91, 90);
+  border: solid 1rpx rgb(255, 91, 90);
+  width: 70rpx;
+  height: 70rpx;
+  text-align: center;
+  line-height: 70rpx;
+  color: aliceblue;
+  border-radius: 50%;
+  margin-right: 20rpx;
+
+}
+
+.qk {
+  display: flex;
+  flex-direction: column;
+  height: 150rpx;
+  width: calc((100% - 60rpx)/4);
+  align-items: center;
+  margin-top: 50rpx;
+}
+
+.qk_c {
+  display: flex;
+  flex-direction: row;
+  width: calc(100% - 60rpx);
+  background-color: rgb(246, 247, 251);
+  border-radius: 25rpx;
+  justify-content: center;
+  margin-top: 30rpx;
+}
