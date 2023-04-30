@@ -101,3 +101,15 @@ page {
   height: 150rpx;
 
 }
+
+.image_n {
+  width: 100rpx;
+  height: 100rpx;
+  margin-right: 20rpx;
+}
+
+.image_2 {
+  width: 80rpx;
+  height: 80rpx;
+  margin-right: 30rpx;
+}

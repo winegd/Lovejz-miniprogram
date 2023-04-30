@@ -1,2 +1,19 @@
 <!--pages/profile/profile.wxml-->
-<text>pages/profile/profile.wxml</text>
+<view class="c">
+  <view wx:for="{{userInfo}}" wx:for-item="item" wx:for-index="index" wx:key="index">
+    <view class="userinfo">
+      <view style="margin-left: 40rpx;margin-right: 40rpx;">
+
+        <view wx:if="{{index == 0}}" style="height: 150rpx;" class="info">
+          <text>{{item.title}}</text>
+          <image style="height: 100rpx;width: 100rpx;border-radius: 50%;" src="{{item.data}}"></image>
+        </view>
+        <view wx:else class="info">
+          <text>{{item.title}}</text>
+          <text>{{item.data}}</text>
+        </view>
+      </view>
+    </view>
+
+  </view>
+</view>

@@ -1,0 +1,9 @@
+{
+  "usingComponents": {
+    "van-button": "@vant/weapp/button/index",
+    "van-loading": "@vant/weapp/loading/index",
+    "question": "/components/question/question",
+    "van-progress": "@vant/weapp/progress/index",
+    "van-overlay": "@vant/weapp/overlay/index"
+  }
+}

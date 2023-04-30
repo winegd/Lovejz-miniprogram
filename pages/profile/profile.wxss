@@ -1,1 +1,31 @@
 /* pages/profile/profile.wxss */
+Page {
+  /* height: 100%; */
+  background: -webkit-linear-gradient(#1296db 0%, rgb(240, 239, 244) 30%);
+
+}
+
+.c {
+  margin: 20rpx 20rpx 0 20rpx;
+  background-color: #ffff;
+  border-radius: 20rpx;
+  display: flex;
+  flex-direction: column;
+
+}
+
+.userinfo {
+  background-color: #ffff;
+  border-radius: 30rpx;
+
+}
+
+
+.info {
+  display: flex;
+  height: 100rpx;
+  flex-direction: row;
+  justify-content: space-between;
+  border-bottom: rgb(240, 239, 244) solid 1rpx;
+  align-items: center;
+}

@@ -1,0 +1,126 @@
+<!--pages/pk/pk.wxml-->
+
+<view>
+  <view wx:if="{{show == 0}}">
+    <view wx:if="{{show_button}}" style="position: absolute;left: 50%;top: 70%;transform: translate(-50%, -50%);">
+      <van-button custom-style="width:400rpx;" round color="linear-gradient(#ABDCFF, #0396FF)" type="info"
+        bind:click="start_pk">开始匹配</van-button>
+    </view>
+    <view wx:else style="position: absolute;left: 50%;top: 70%;transform: translate(-50%, -50%);">
+      <van-button custom-style="width:400rpx;" round color="linear-gradient(#ABDCFF, #0396FF)" type="info"
+        bind:click="cancel_pk">取消匹配</van-button>
+    </view>
+    <view
+      style="display: flex;flex-direction: column;align-items: center;position: absolute;top: 10%;width: 100%;left: 50%; transform: translateX(-50%);">
+
+      <image style="height: 150rpx;width: 150rpx;border-radius: 50%;" src="{{userInfo.avatarurl}}"></image>
+      <text style="color: aliceblue;margin-top: 20rpx;">{{userInfo.nickname}}</text>
+    </view>
+
+  </view>
+  <view wx:if="{{show == 1 && show_pk_info == 1}}">
+
+    <view class="question_c">
+      <view style="display:flex;flex-direction: row;justify-content: space-between;">
+
+
+        <view class="pk_avatar_c_l">
+          <view style="display: flex;flex-direction: row;align-items: center;margin-top: 10rpx;">
+            <image class="pk_avatar" src="{{userInfo.avatarurl}}"></image>
+            <view style="margin-left: 10rpx;" class="oneLine">
+              <text style="color: white;">{{userInfo.nickname}}</text>
+
+            </view>
+          </view>
+          <text style="font-size: 70rpx;font-weight: 700;color: white;">{{score}}</text>
+
+        </view>
+        <view style="position: absolute;top: 6%;left: 50%;transform: translateX(-50%);">
+          <image style="height:100rpx;width:100rpx;" src="/icon/vs_w.png">
+
+          </image>
+        </view>
+        <view class="pk_avatar_c_r">
+          <view style="display: flex;flex-direction: row;align-items: center;margin-top: 10rpx;">
+            <image class="pk_avatar" src="{{userInfo2.avatarurl}}"></image>
+            <view style="margin-left: 10rpx;" class="oneLine">
+              <text style="color: white;">{{userInfo2.nickname}}</text>
+
+            </view>
+          </view>
+          <text style="font-size: 70rpx;font-weight: 700;color: white;">{{score2}}</text>
+
+        </view>
+
+      </view>
+
+      <view class="question_q">
+        <question id="question_component" bind:updateQuestion="updateQuestion" bind:nextQuestion="nextQuestion"
+          mode="11" question="{{list}}">
+        </question>
+      </view>
+
+    </view>
+
+
+  </view>
+
+
+  <view wx:if="{{show == 1  && show_pk_info == 0}}">
+
+    <view class="info">
+
+      <view class="avatar_c_l">
+
+        <image class="avatar" src="{{userInfo.avatarurl}}"></image>
+        <view style="width: 150rpx;" class="oneLine">
+
+          <text style="color: aliceblue;margin-top: 20rpx;">{{userInfo.nickname}}</text>
+        </view>
+      </view>
+      <image style="height:100rpx;width:100rpx;" src="/icon/vs.png">
+
+      </image>
+      <view class="avatar_c_r">
+
+        <image class="avatar" src="{{userInfo2.avatarurl}}"></image>
+
+        <view style="width: 150rpx;" class="oneLine">
+
+          <text style="color: aliceblue;margin-top: 20rpx;">{{userInfo2.nickname}}</text>
+        </view>
+
+      </view>
+
+    </view>
+    <view class="progress">
+
+      <van-progress percentage="{{progress}}" />
+
+    </view>
+  </view>
+
+  <view wx:if="{{loading}}" class="loading">
+
+    <van-loading type="spinner" color="#ffff" size="100rpx" vertical>
+      <text style="color: aliceblue;">正在匹配中</text>
+    </van-loading>
+  </view>
+
+  <!-- <view wx:if="{{showPPopup}}" class="popup">
+    <image src="{{cdn_url+'/fail.png'}}">
+
+    </image>
+  </view> -->
+  <van-overlay show="false" wx:if="{{showFPopup}}" bind:click="onClickHideF">
+    <image mode="aspectFit" style="height: 100%;width: 100%;" src="{{cdn_url+'/fail.png'}}">
+
+    </image>
+  </van-overlay>
+  <van-overlay show="true" wx:if="{{showTPopup}}" bind:click="onClickHideT">
+    <image mode="aspectFit" style="height: 100%;width: 100%;" src="{{cdn_url+'/succes.png'}}">
+    </image>
+  </van-overlay>
+
+  <!-- </view> -->
+</view>

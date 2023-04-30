@@ -1,5 +1,6 @@
 // pages/my/my.js
 import { getUserInfo } from '../../api/student'
+import { request } from '../../api/request'
 const app = getApp()
 const defaultAvatarUrl = 'https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0'
 //七牛工具sdk qiniuUploader.js
@@ -35,30 +36,49 @@ Page({
       {
         'name': '错题本',
         'icon': '/icon/cw.png',
-        'to': '/pages/mistake/mistake'
+        'to': '/pages/mistake/mistake?data=0',
+        'num': undefined
       },
       {
         'name': '收藏的题目',
         'icon': '/icon/sc.png',
-        'to': '/pages/mistake/mistake'
+        'to': '/pages/mistake/mistake?data=1',
+        'num': undefined
       },
       {
         'name': '荣誉证书',
         'icon': '/icon/ry.png',
-        'to': '/pages/mistake/mistake'
-      },
-      {
-        'name': '荣誉证书',
-        'icon': '/icon/ry.png',
-        'to': '/pages/mistake/mistake'
+        'to': '/pages/mistake/mistake',
+        'num': undefined
       },
       {
         'name': '排行榜',
         'icon': '/icon/ph.png',
-        'to': '/pages/mistake/mistake'
+        'to': '/pages/mistake/mistake',
+        'num': undefined
       }
     ]
 
+
+  },
+  async getInfo () {
+    let that = this
+    let openid = wx.getStorageSync('userInfo').openid
+    if (openid != undefined) {
+      request('record/info/' + openid, 'GET').then(res => {
+        console.log(res)
+        if (res.code == 200) {
+          let content = that.data.content_list
+          content[0].num = res.data.map.mistakeTotal
+          content[1].num = res.data.map.favoriteTotal
+          that.setData({
+            content_list: content
+          })
+        }
+
+      })
+
+    }
 
   },
   onChooseAvatar (e) {
@@ -160,6 +180,10 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    wx.setTabBarStyle({
+      backgroundColor: '#ffff'
+    })
+    this.getInfo()
 
 
   },

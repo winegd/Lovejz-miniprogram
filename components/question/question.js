@@ -1,5 +1,6 @@
 import { setFavorite } from '../../api/record'
 import { request } from "../../api/request"
+const app = getApp()
 Component({
 
   /**
@@ -17,29 +18,39 @@ Component({
     list: null,
     zimu: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T'],
     tixing: ['单选题', '多选题'],
+    nandu: ['基础', '适中', '提高'],
     m: 0,
     timer: null,
     time: 1,
     timerStarted: false,
     sc_img: '/icon/sc_2.png',
     sc_img_2: '/icon/sc.png',
-    sc_img_state: 1
 
   },
   observers: {
-    'question': function (val) {
+    'question,mode': function (question, mode) {
       // for (let i of val.options) {
       //   i.selected = 0
       //   // console.log(i)
       // }
-      this.setData({
-        list: val
-      })
-    },
-    'mode': function (val) {
-      this.setData({
-        m: val
-      })
+      let that = this
+
+      if (mode == 1) {
+        this.isFavorite(wx.getStorageSync('userInfo').openid, question.id).then(res => {
+          question.isFavorite = res
+          that.setData({
+            list: question,
+            m: mode
+          })
+        })
+      } else {
+        this.setData({
+          list: question,
+          m: mode
+        })
+      }
+
+
     }
 
 
@@ -56,98 +67,130 @@ Component({
     }
   },
   methods: {
-    async setFavorite (questionId, state) {
-      if (state == 1) {
-      request('record/favorite/' + questionId + '/' + state, 'POST').then(res => {
-          if (res.code == 200) {
-            wx.showToast({
-              icon: 'success',
-              title: '收藏成功',
-            })
-          } else {
-            wx.showToast({
-              icon: 'error',
-              title: '收藏失败',
-            })
-          }
-        })
-      } else {
-        request('record/favorite/' + questionId + '/' + state, 'POST').then(res => {
-          if (res.code == 200) {
-            wx.showToast({
-              icon: 'success',
-              title: '取消收藏成功',
-              duration:1000
-            })
-          } else {
-            wx.showToast({
-              icon: 'error',
-              title: '取消收藏失败',
-              duration:1000
-            })
-          }
-        })
-
-      }
-
-
-    },
-    cancel_sc(){
-      this.setFavorite(this.data.list.questionId, 0)
-      let data = this.data.list
-      data.isFavorite = 0
-      this.setData({
-        list:data
-      })
-
-
-
-    },
-    set_sc(){
-      this.setFavorite(this.data.list.questionId, 1)
-      let data = this.data.list
-      data.isFavorite = 1
-      this.setData({
-        list:data
-      })
-    },
-    change_sc () {
-      // console.log(this.data.sc_img_state)
+    async cancelFavorite (openid, question_id) {
       let that = this
-      if (this.data.sc_img_state) {
-        this.setFavorite(this.data.list.id, this.data.sc_img_state)
-        this.setData({
-          sc_img: '/icon/sc.png',
-          sc_img_state: 0
-        })
-      } else {
-        this.setFavorite(this.data.list.id, this.data.sc_img_state)
-        this.setData({
-          sc_img: '/icon/sc_2.png',
-          sc_img_state: 1
-        })
-      }
+      request('favorite/delete/' + openid + '/' + question_id, 'DELETE').then(res => {
+        if (res.code == 200) {
+          wx.showToast({
+            icon: 'success',
+            title: '取消成功',
+          })
+          let data = that.data.list
+          data.isFavorite = 0
+          that.setData({
+            list: data
+          })
+        } else {
+          wx.showToast({
+            icon: 'error',
+            title: '取消失败',
+          })
+        }
+      })
+
+
     },
+    async setFavorite (favorite) {
+      let that = this
+      request('favorite/save', 'PUT', favorite).then(res => {
+        if (res.code == 200) {
+          wx.showToast({
+            icon: 'success',
+            title: '收藏成功',
+          })
+          let data = that.data.list
+          data.isFavorite = 1
+          that.setData({
+            list: data
+          })
+        } else {
+          wx.showToast({
+            icon: 'error',
+            title: '收藏失败',
+          })
+        }
+      })
+
+
+    },
+    async isFavorite (openid, questionId) {
+      let code = undefined
+      await request('favorite/isFavorite/' + openid + '/' + questionId, 'GET').then(res => {
+        if (res.code == 200) {
+
+          code = res.data
+
+        }
+      })
+      return code
+    },
+    cancel_sc () {
+      this.cancelFavorite(app.globalData.userInfo.openid, this.data.list.id)
+
+
+
+
+    },
+    set_sc () {
+      let favorite = {}
+      favorite.userId = app.globalData.userInfo.openid
+      favorite.usedTime = this.data.list.usedTime
+      favorite.questionId = this.data.list.id
+      let selected = ''
+      for (let j of this.data.list.options) {
+        if (j.selected == 1) {
+          // selected.push(j.id)
+          selected = selected + j.id + ','
+        }
+      }
+      favorite.selected = selected
+      console.log(favorite)
+      this.setFavorite(favorite)
+    },
+
 
     select_answer (e) {
-      // console.log(e.currentTarget.dataset)
-      let index = e.currentTarget.dataset.index
-      let selected = e.currentTarget.dataset.selected
-      let type = e.currentTarget.dataset.type
-      let list = this.change_select(this.data.list, index, selected, type)
-      // this.setData({
-      //   list: this.change_select(this.data.list, index, selected, type)
-      // })
-      let data = {}
-      data.list = list
-      data.list.usedTime = this.data.time
-      data.index = this.properties.index
-      this.triggerEvent('updateQuestion', data)
-      if (type == 0) {
-        this.triggerEvent('nextQuestion', this.properties.index)
-      } else if (type == 1) {
-        this.triggerEvent('nextQuestion')
+      if (this.data.m == 11) {
+        this.select_answer_pk(e)
+      } else {
+        // console.log(e.currentTarget.dataset)
+        let index = e.currentTarget.dataset.index
+        let selected = e.currentTarget.dataset.selected
+        let type = e.currentTarget.dataset.type
+        let list = this.change_select(this.data.list, index, selected, type)
+        // this.setData({
+        //   list: this.change_select(this.data.list, index, selected, type)
+        // })
+        let data = {}
+        data.list = list
+        data.list.usedTime = this.data.time
+        data.index = this.properties.index
+        this.triggerEvent('updateQuestion', data)
+        if (type == 0) {
+          this.triggerEvent('nextQuestion', this.properties.index)
+        } else if (type == 1) {
+          this.triggerEvent('nextQuestion')
+        }
       }
+
+    },
+    select_answer_pk (e) {
+      // console.log(this.data.list)
+
+      let index = e.currentTarget.dataset.index
+      // let selected = e.currentTarget.dataset.selected
+      // let type = 0
+      let list = this.change_select_pk(this.data.list, index)
+      this.setData({
+        list
+      })
+      list.usedTime = this.data.time
+      this.setData({
+        time: 1
+      })
+      // console.log(this.data.list)
+
+      this.triggerEvent('nextQuestion', this.properties.list)
     },
     click_question (e) {
       let content = e.currentTarget.dataset.content
@@ -193,6 +236,19 @@ Component({
 
     },
 
+    change_select_pk (list, index) {
+      list.options[index].selected = 1
+      list.isAnswer = 1
+
+      for (let i of list.options) {
+        if (i.selected == 1 && i.isCorrect == 1) {
+          list.isCorrect = 1
+        }
+      }
+      console.log(list)
+      return list
+
+    },
     set_selected (selected) {
       if (selected == 0) return 1
       else return 0

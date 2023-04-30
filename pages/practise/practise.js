@@ -89,12 +89,13 @@ Page({
       for (let j of i.options) {
         if (j.selected == 1) {
           // selected.push(j.id)
-          selected = selected+j.id+','
+          selected = selected + j.id + ','
         }
       }
       record.selected = selected
       records.push(record)
     }
+    this.saveMistake(records)
     saveRecords(records).then(res => {
       if (res.code == 201) {
         wx.showToast({
@@ -105,27 +106,52 @@ Page({
     })
     console.log(records)
   },
-  async get_record(id){
+  async get_record (id) {
     let that = this
-    request('record/getrecord/'+id,'GET').then(res=>{
-      if(res.code == 200){
+    request('mistake/list/' + id, 'GET').then(res => {
+      if (res.code == 200) {
         let data = []
         data.push(res.data)
-        for(let i of data[0].question.options){
-          let res = data[0].selected.split(',').indexOf(i.id+'')
+        for (let i of data[0].question.options) {
+          let res = data[0].selected.split(',').indexOf(i.id + '')
           // console.log(data[0].selected.split(','))
-          if(res != -1){
+          if (res != -1) {
             i.selected = 1
-          }else{
+          } else {
             i.selected = 0
-    
+
           }
+        }
+        that.setData({
+          list: data,
+          m: 2
+        })
+        console.log(data)
+      }
+    })
+
+  },
+  async get_favorite (id) {
+    let that = this
+    request('favorite/list/' + id, 'GET').then(res => {
+      if (res.code == 200) {
+        let data = []
+        data.push(res.data)
+        for (let i of data[0].question.options) {
+          let res = data[0].selected.split(',').indexOf(i.id + '')
+          // console.log(data[0].selected.split(','))
+          if (res != -1) {
+            i.selected = 1
+          } else {
+            i.selected = 0
+
           }
-          that.setData({
-            list:data,
-            m:2
-          })
-          console.log(data)
+        }
+        that.setData({
+          list: data,
+          m: 2
+        })
+        console.log(data)
       }
     })
 
@@ -141,10 +167,14 @@ Page({
       this.getQuestions(options.data)
 
     } else if (options.msg == 'mistake') {
-  
+
       this.get_record(options.data)
- 
-      
+
+
+    } else if (options.msg == 'favorite') {
+      this.get_favorite(options.data)
+    }else if(options.msg == 'mistake_practice'){
+      this.getMistakesPractice()
     }
 
 
@@ -246,6 +276,15 @@ Page({
     let that = this
     getQuestionRandom().then(res => {
       if (res.code == 200) {
+        for (let i of res.data) {
+          i.isAnswer = 0
+          i.isCorrect = 0
+          i.usedTime = 1
+          for (let j of i.options) {
+            j.selected = 0
+          }
+        }
+        res.data.push(123)
         that.setData({
           list: res.data
         })
@@ -256,6 +295,47 @@ Page({
   scroll (e) {
     // console.log(e)
 
+  },
+  async saveMistake (records) {
+    let data = []
+    for (let i of records) {
+      if (i.isCorrect == 0) {
+        data.push(i)
+      }
+
+    }
+    request('mistake/saveall', 'PUT', data).then(res => {
+      if (res.code == 201) {
+        wx.showToast({
+          icon: 'none',
+          title: '网络出错，请稍后再试',
+        })
+      }
+    })
+  },
+  async getMistakesPractice(){
+    let that = this
+    request('mistake/question/'+app.globalData.userInfo.openid,'GET').then(res=>{
+      // console.log(res.data)
+      let list = []
+      for (let i of res.data) {
+        i = i.question
+        i.isAnswer = 0
+        i.isCorrect = 0
+        i.usedTime = 1
+        for (let j of i.options) {
+          j.selected = 0
+        }
+        list.push(i)
+      }
+      console.log(list)
+      list.push(123)
+      that.setData({
+        list
+      })
+      
+
+    })
   }
 
 })

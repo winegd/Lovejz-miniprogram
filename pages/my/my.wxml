@@ -58,7 +58,7 @@
               <text>{{img.name}}</text>
             </view>
             <view class="content-jt">
-              <text>10</text>
+              <text>{{img.num}}</text>
               <image class="content-right" src="/icon/right.png" />
             </view>
           </view>

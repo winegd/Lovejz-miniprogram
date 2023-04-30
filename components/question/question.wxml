@@ -1,13 +1,37 @@
 <!--pages/question/question.wxml-->
 <view class="question_content">
   <view style="margin-top: 40rpx;"></view>
+  <view wx:if="{{ m== 11}}" class="question">
+    <!-- <view class="question_top">
+      <view>
+        <van-tag style="margin-right: 20rpx;" size="medium" plain type="primary"> {{tixing[list.type]}}
+        </van-tag>
+        <van-tag size="medium" plain type="primary">
+          {{nandu[list.level]}}
+        </van-tag>
+      </view>
+    </view> -->
+    <rich-text style="white-space: pre-line;" bindtap="click_question" data-content="{{question.content}}"
+      nodes="{{list.content }}"></rich-text>
+  </view>
+
 
   <view wx:if="{{ m==0 || m==1}}" class="question">
     <view class="question_top">
-      <text>( {{tixing[list.type]}} )</text>
-
-      <image wx:if="{{m == 1}}" bindtap="change_sc" style="height: 60rpx;width: 60rpx;margin-right: 40rpx;z-index: 99;"
-        src="{{sc_img}}"></image>
+      <view>
+        <!-- <text>( {{tixing[list.type]}} ) </text> -->
+        <van-tag style="margin-right: 20rpx;" size="medium" plain type="primary"> {{tixing[list.type]}}
+        </van-tag>
+        <van-tag size="medium" plain type="primary">
+          {{nandu[list.level]}}
+        </van-tag>
+      </view>
+      <view wx:if="{{m == 1}}">
+        <image wx:if="{{list.isFavorite == 1}}" bindtap="cancel_sc"
+          style="height: 60rpx;width: 60rpx;margin-right: 40rpx;z-index: 99;" src="{{sc_img_2}}"></image>
+        <image wx:else bindtap="set_sc" style="height: 60rpx;width: 60rpx;margin-right: 40rpx;z-index: 99;"
+          src="{{sc_img}}"></image>
+      </view>
 
     </view>
     <text style="float: left;font-weight: 600;">{{index+1+'.'}}</text>
@@ -19,10 +43,9 @@
     <view class="question_top">
       <text>( {{tixing[list.question.type]}} )</text>
 
-      <image wx:if="{{list.isFavorite == 1}}" bindtap="cancel_sc" style="height: 60rpx;width: 60rpx;margin-right: 40rpx;z-index: 99;"
+      <image wx:if="{{list.isFavorite == 1}}" style="height: 60rpx;width: 60rpx;margin-right: 40rpx;z-index: 99;"
         src="{{sc_img_2}}"></image>
-        <image wx:else bindtap="set_sc" style="height: 60rpx;width: 60rpx;margin-right: 40rpx;z-index: 99;"
-        src="{{sc_img}}"></image>
+      <image wx:else style="height: 60rpx;width: 60rpx;margin-right: 40rpx;z-index: 99;" src="{{sc_img}}"></image>
 
     </view>
     <text style="float: left;font-weight: 600;">{{index+1+'.'}}</text>
@@ -96,6 +119,40 @@
     </view>
 
   </view>
+  <view style="border-bottom: 5rpx;" wx:if="{{m == 11}}" wx:for="{{list.options}}" wx:for-index="index2"
+    wx:for-item="option" wx:key="index2">
+
+    <view bindtap="select_answer" data-type="{{list.type}}" data-index="{{index2}}" data-selected="{{option.selected}}"
+      class="option">
+      <view wx:if="{{list.isAnswer == 0}}">
+        <view class="{{option.selected ==1 ? 'circle':'circle_2'}}">
+          {{zimu[index2]}}
+        </view>
+      </view>
+      <view wx:else>
+        <view wx:if="{{option.selected ==1 && option.isCorrect == 1}}" class="circle_true">
+          {{zimu[index2]}}
+        </view>
+        <view wx:elif="{{option.selected ==1 && option.isCorrect != 1 }}" class="circle_false">
+          {{zimu[index2]}}
+        </view>
+        <view wx:elif="{{option.isCorrect == 1}}" class="circle_true">
+          {{zimu[index2]}}
+        </view>
+
+        <view wx:else class="circle_2">
+          {{zimu[index2]}}
+        </view>
+      </view>
+
+
+      <view class="option-item">
+        <rich-text style="white-space: pre-line;" nodes="{{option.content}}"></rich-text>
+      </view>
+    </view>
+
+  </view>
+
 
   <view wx:if="{{m == 1}}" style="box-shadow: 0 0 20px #eeeeee;border-radius: 25rpx;height: 230rpx;margin-top: 40rpx;">
 
@@ -171,7 +228,7 @@
               <view wx:if="{{index3 == 0}}" style="color: #a2a4b2;">
                 你的答案：
               </view>
-              
+
               <view style="color: rgb(255, 91, 90);font-size: medium;font-weight: 600;"
                 wx:if="{{option.selected == 1}}">
                 {{zimu[index3]}}

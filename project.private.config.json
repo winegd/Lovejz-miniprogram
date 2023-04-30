@@ -43,11 +43,25 @@
           "query": "",
           "launchMode": "default",
           "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "pages/profile/profile",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "pages/pk/pk",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
         }
       ]
     }
   },
   "description": "项目私有配置文件。此文件中的内容将覆盖 project.config.json 中的相同字段。项目的改动优先同步到此文件中。详见文档：https://developers.weixin.qq.com/miniprogram/dev/devtools/projectconfig.html",
-  "projectname": "Love_Jz",
-  "libVersion": "2.31.0"
+  "projectname": "Lovejz-miniprogram",
+  "libVersion": "2.30.4"
 }

@@ -10,7 +10,7 @@ Page({
   },
   onLoad (options) {
     getlist().then(res => {
-      const vtabs = res.data.map(item => ({ title: item.chapter.name.substring(0, 3) }))
+      const vtabs = res.data.map(item => ({ title: item.name.substring(0, 3) }))
       this.setData({
         chapters: res.data,
         vtabs

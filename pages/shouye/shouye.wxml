@@ -28,7 +28,7 @@
         <navigator target="self" url="{{item.to}}" open-type="navigate">
           <view class="content-gongneng">
             <text style="margin-left: 40rpx;font-weight: 520;">{{item.name}}</text>
-            <image style="width: 100rpx;height: 100rpx;margin-right: 20rpx;" src="{{item.icon}}" />
+            <image class="{{index == 2 ? 'image_2':'image_n'}}" src="{{item.icon}}" />
 
           </view>
         </navigator>

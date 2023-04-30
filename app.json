@@ -6,7 +6,8 @@
     "pages/chapter/chapter",
     "pages/practise/practise",
     "pages/profile/profile",
-    "pages/mistake/mistake"
+    "pages/mistake/mistake",
+    "pages/pk/pk"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -23,6 +24,12 @@
         "text": "首页",
         "iconPath": "/icon/shouye.png",
         "selectedIconPath": "/icon/shouye_after.png"
+      },
+      {
+        "pagePath": "pages/pk/pk",
+        "text": " ",
+        "iconPath": "/icon/pk.png",
+        "selectedIconPath": "/icon/pk_after.png"
       },
       {
         "pagePath": "pages/my/my",

@@ -1,5 +1,4 @@
-<!--pages/mistake/mistake.wxml-->
-<view>
+<view class="container">
   <view class="search">
     <view style="height: 60rpx;padding-top: 6rpx;margin-left: 40rpx;">
       <input bindinput="search_input" placeholder="请输入关键词搜索" />
@@ -14,57 +13,40 @@
   <view class="q_content">
 
     <view>
+      <!-- <van-swipe-cell id="swipe-cell" left-width="{{ 50 }}" async-close bind:close="onClose"> -->
 
       <view class="question" wx:for="{{list}}" wx:for-index="index" wx:for-item="item" wx:key="index">
-        <view bindtap="click_question" data-index="{{index}}"
-          style="margin-left: 20rpx;margin-right: 20rpx;margin-top: 20rpx;">
 
-          <view style="display: flex;flex-direction: row;justify-content: flex-start;">
-            <view class="tag">
-              {{tixing[item.question.type]}}
+        <view style="margin-left: 20rpx;margin-right: 20rpx;margin-top: 20rpx;">
+
+          <view style="display: flex;flex-direction: row;justify-content: space-between;">
+            <view>
+              <van-tag style="margin-right: 20rpx;" size="medium" plain type="primary"> {{tixing[item.question.type]}}
+              </van-tag>
+              <van-tag style="margin-right: 20rpx;" size="medium" plain type="primary">
+                {{nandu[item.question.level]}}
+
+              </van-tag>
+              <text wx:if="{{m == 0}}" style="color: red;font-size: small;">错误次数:{{item.num}}</text>
             </view>
-            <view style="margin-left: 20rpx;" class="tag">
-              {{nandu[item.question.level]}}
+
+            <view>
+              <image wx:if="{{item.isFavorite == 1}}" bindtap="cancel_sc" data-index="{{index}}"
+                style="height: 60rpx;width: 60rpx;margin-right: 40rpx;z-index: 99;" src="{{sc_img_2}}"></image>
+              <image wx:else data-index="{{index}}" bindtap="set_sc"
+                style="height: 60rpx;width: 60rpx;margin-right: 40rpx;z-index: 99;" src="{{sc_img}}"></image>
             </view>
           </view>
 
-          <view>
+          <view bindtap="click_question" data-index="{{index}}">
             <text style="float: left;font-weight: 600;">{{index+1+'.'}}</text>
             <rich-text style="white-space: pre-line;" nodes="{{item.question.content}}"></rich-text>
           </view>
-          <!-- 
-          <view>
-            <view style="border-bottom: 5rpx;display: flex;flex-direction: row;" wx:for="{{item.question.options}}"
-              wx:for-index="index2" wx:for-item="option" wx:key="index2">
-
-              <view data-type="{{list.type}}" data-index="{{index2}}" data-selected="{{option.selected}}"
-                class="option">
-                <view wx:if="{{option.selected ==1 && option.isCorrect == 1}}" class="circle_true">
-                  {{zimu[index2]}}
-                </view>
-                <view wx:elif="{{option.selected ==1 && option.isCorrect != 1 }}" class="circle_false">
-                  {{zimu[index2]}}
-                </view>
-                <view wx:elif="{{option.isCorrect == 1}}" class="circle_true">
-                  {{zimu[index2]}}
-                </view>
-
-                <view wx:else class="circle_2">
-                  {{zimu[index2]}}
-                </view>
-
-
-
-                <view class="option-item">
-                  <rich-text style="white-space: pre-line;" nodes="{{option.content}}"></rich-text>
-
-                </view>
-              </view>
-
-            </view>
-          </view> -->
         </view>
+
       </view>
+
+      <!-- </van-swipe-cell> -->
 
     </view>
 

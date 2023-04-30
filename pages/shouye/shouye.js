@@ -1,5 +1,6 @@
 // pages/shouye/shouye.js
 import { request } from "../../api/request"
+const app = getApp()
 Page({
 
   /**
@@ -16,6 +17,11 @@ Page({
         'name': '答对',
         'count': 0,
         'color': '#08E61D'
+      },
+      {
+        'name': '答错',
+        'count': 0,
+        'color': 'red'
       },
       {
         'name': '平均用时',
@@ -42,7 +48,7 @@ Page({
       {
         'name': '刷错题',
         'icon': '/icon/ct.png',
-        'to': '/pages/practise/practise?msg=random'
+        'to': '/pages/practise/practise?msg=mistake_practice'
       },
 
 
@@ -57,6 +63,7 @@ Page({
 
 
 
+
   },
 
   /**
@@ -66,26 +73,34 @@ Page({
 
   },
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
+  async getStudyData () {
     let list = this.data.content_list
     let that = this
-    request("record/todayData", 'GET').then(res => {
+    request("record/todayData/" + wx.getStorageSync('userInfo').openid, 'GET').then(res => {
       list[0].count = res.data.total
       list[1].count = res.data.correct
-      list[2].count = res.data.avgTime + 's'
+      list[2].count = res.data.total - res.data.correct
+      list[3].count = res.data.avgTime + 's'
       if (res.data.correctRate >= 0.7) {
-        list[3].color = '#08E61D'
+        list[4].color = '#08E61D'
       } else {
-        list[3].color = 'red'
+        list[4].color = 'red'
       }
-      list[3].count = res.data.correctRate * 100 + '%'
+      list[4].count = res.data.correctRate * 100 + '%'
       that.setData({
         content_list: list
       })
     })
+
+  },
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
+    wx.setTabBarStyle({
+      backgroundColor: '#ffff'
+    })
+    this.getStudyData()
 
   },
 
